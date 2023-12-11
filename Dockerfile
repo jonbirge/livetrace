@@ -1,25 +1,27 @@
 # Alpine Linux as the base image
 FROM alpine:latest
 
-# Install Nginx and PHP along with the necessary PHP extensions
-RUN apk update
-RUN apk upgrade
-RUN apk add --no-cache nginx 
-RUN apk add --no-cache php php-fpm php-opcache
-RUN mkdir -p /run/nginx
-
-# Copy the Nginx configuration file
-COPY default.conf /etc/nginx/conf.d/default.conf
-
-# Copy the PHP script to the Nginx web root
-COPY index.php /var/www/localhost/htdocs/index.php
+# Install Nginx and PHP
+RUN apk update && apk upgrade
+RUN apk add --no-cache nginx php-fpm 
 
 # Setup permissions for Nginx web root
-RUN chown -R nginx:nginx /var/www/localhost/htdocs
+RUN mkdir -p /var/www
+RUN chown -R nginx:nginx /var/www
+
+# Copy the Nginx configuration file
+COPY default.conf /etc/nginx/http.d/default.conf
+
+# Copy the PHP script to the Nginx web root
+COPY index.php /var/www/index.php
+
+# Startup script
+COPY start.sh /start.sh
+RUN chmod a+x /start.sh
 
 # Expose port 
-EXPOSE 8080
+EXPOSE 80
 
 # Start Nginx and PHP-FPM
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/start.sh"]
 
