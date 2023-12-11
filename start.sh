@@ -7,5 +7,4 @@ php-fpm82
 # Start nginx in the foreground
 echo "Starting nginx..."
 nginx -g 'daemon off;'
-echo "Ready."
 
