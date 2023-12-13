@@ -1,6 +1,6 @@
 # Define variables
 IMAGE_NAME=livetrace
-VERSION=0.1
+VERSION=latest
 DOCKER_HUB_USER=jonbirge
 
 # Build the Docker image
@@ -11,6 +11,10 @@ build:
 push:
 	docker tag $(IMAGE_NAME):$(VERSION) $(DOCKER_HUB_USER)/$(IMAGE_NAME):$(VERSION)
 	docker push $(DOCKER_HUB_USER)/$(IMAGE_NAME):$(VERSION)
+
+# No cache build (a clear abuse of 'make clean')
+clean:
+	docker build --no-cache .
 
 # Convenience command to build and push
 all: build push
