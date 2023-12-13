@@ -1,21 +1,30 @@
-Document.addEventListener('DOMContentLoaded', function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "runscript.php", true);
+document.addEventListener('DOMContentLoaded', function() {
+    const uniqueId = Math.random().toString(36).substr(2, 9);
+    const outputDiv = document.getElementById('output');
+    let pollingInterval; // Define pollingInterval in a broader scope
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            var lines = xhr.responseText.split("\n");
-            for (var i = 0; i < lines.length; i++) {
-                if (lines[i]) {
-                    var table = document.getElementById('outputTable');
-                    var newRow = table.insertRow(-1);
-                    var newCell = newRow.insertCell(0);
-                    newCell.textContent = lines[i];
+    function pollServer() {
+        fetch('polling.php?id=' + uniqueId)
+            .then(response => response.text())
+            .then(data => {
+                if (data.indexOf("END_OF_SCRIPT") !== -1) {
+                    clearInterval(pollingInterval); // Now it can access pollingInterval
+                    outputDiv.innerHTML = data.replace("END_OF_SCRIPT", "");
+                    outputDiv.innerHTML += "<p>Script execution complete.</p>";
+                } else {
+                    outputDiv.innerHTML = data;
                 }
-            }
-        }
-    };
+            });
+    }
 
-    xhr.send();
+    // Start the Bash script and polling
+    fetch('startscript.php?id=' + uniqueId)
+        .then(response => {
+            if (response.ok) {
+                pollingInterval = setInterval(pollServer, 1000);
+            } else {
+                console.error('Error starting script');
+            }
+        });
 });
 
