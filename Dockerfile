@@ -13,19 +13,19 @@ RUN chown -R nginx:nginx /var/www
 COPY default.conf /etc/nginx/http.d/default.conf
 
 # Copy the files to the Nginx web root
-COPY *.html *.php *.js /var/www/
+COPY *.html *.php *.js *.css /var/www/
 
 # Install custom test script
 COPY test.sh /var/www/test.sh
-RUN chmod a+x /var/www/test.sh
+# RUN chmod a+x /var/www/test.sh
 
 # Startup script
-COPY start.sh /start.sh
-RUN chmod a+x /start.sh
+COPY entry.sh /entry.sh
+# RUN chmod a+x /entry.sh
 
 # Expose port 
 EXPOSE 80
 
 # Start Nginx and PHP-FPM
-CMD ["/start.sh"]
+CMD ["/entry.sh"]
 
