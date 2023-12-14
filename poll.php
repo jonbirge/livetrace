@@ -12,7 +12,8 @@ if (file_exists($tempFile)) {
     echo "<table>";
 
     // Read each line of the CSV file
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+    // (Just print everything as one line for now...)
+    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
         echo "<tr>";
         foreach ($data as $cell) {
             echo "<td>" . htmlspecialchars($cell) . "</td>";

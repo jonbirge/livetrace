@@ -6,6 +6,7 @@ RUN apk update && apk upgrade
 RUN apk add --no-cache nginx php-fpm bash
 
 # Setup Nginx web root
+RUN rm -rf /var/www
 RUN mkdir -p /var/www
 RUN chown -R nginx:nginx /var/www
 
@@ -16,12 +17,10 @@ COPY default.conf /etc/nginx/http.d/default.conf
 COPY index.html start.php poll.php script.js styles.css /var/www/
 
 # Install custom test script
-COPY test.sh /var/www/test.sh
-# RUN chmod a+x /var/www/test.sh
+COPY trace.sh /var/www/
 
 # Startup script
 COPY entry.sh /entry.sh
-# RUN chmod a+x /entry.sh
 
 # Expose port 
 EXPOSE 80
