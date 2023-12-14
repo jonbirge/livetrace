@@ -27,4 +27,3 @@ EXPOSE 80
 
 # Start Nginx and PHP-FPM
 CMD ["/entry.sh"]
-
