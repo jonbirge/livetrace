@@ -11,7 +11,7 @@ if (file_exists($tempFile)) {
     // Start the HTML table
     echo "<table>";
 
-    // Read each line of the CSV file
+    // Read each line of a CSV file and format into table
     // (Just print everything as one line for now...)
     while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
         echo "<tr>";
