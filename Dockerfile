@@ -3,25 +3,28 @@ FROM alpine:latest
 
 # Install Nginx and PHP
 RUN apk update && apk upgrade
-RUN apk add --no-cache nginx php-fpm 
+RUN apk add --no-cache nginx php-fpm bash
 
-# Setup permissions for Nginx web root
+# Setup Nginx web root
+RUN rm -rf /var/www
 RUN mkdir -p /var/www
 RUN chown -R nginx:nginx /var/www
 
 # Copy the Nginx configuration file
 COPY default.conf /etc/nginx/http.d/default.conf
 
-# Copy the PHP script to the Nginx web root
-COPY index.php /var/www/index.php
+# Copy the files to the Nginx web root
+COPY index.html start.php poll.php script.js styles.css /var/www/
+
+# Install custom test script
+COPY trace.sh /var/www/
 
 # Startup script
-COPY start.sh /start.sh
-RUN chmod a+x /start.sh
+COPY entry.sh /entry.sh
 
 # Expose port 
 EXPOSE 80
 
 # Start Nginx and PHP-FPM
-CMD ["/start.sh"]
+CMD ["/entry.sh"]
 

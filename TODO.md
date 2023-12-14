@@ -1,11 +1,14 @@
 # TODO
 
-- Redirect NGINX and PHP-FPM logging to docker log
-- Use smaller Alpine base image
-- AJAX test that runs script that prints out the time each second 
+## Generic capability
+- Use nginx:alpine base image to get logging
 - Add appropriate traceroute package to container
+
+## Live trace implementation
 - Implement live traceroute
 - Implement ping timer and ip host info
-- Service menu at root?
-- How do we know which executable for fpm-phpXX to run?
+- Service menu at root
+
+## Longer term
+- How do we know which executable for fpm-php to run?
 
