@@ -27,6 +27,7 @@ header("Pragma: no-cache");
                 <td>Host name:</td>
                 <td>
                     <?php
+                    $user_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
                     $host_name = gethostbyaddr($user_ip);
                     if ($host_name == "") {
                         echo "No host name"; }
