@@ -13,7 +13,7 @@ RUN chown -R nginx:nginx /var/www
 COPY default.conf /etc/nginx/http.d/default.conf
 
 # Copy the files to the Nginx web root
-COPY *.html *.php *.js *.css /var/www/
+COPY index.html start.php poll.php script.js styles.css /var/www/
 
 # Install custom test script
 COPY test.sh /var/www/test.sh

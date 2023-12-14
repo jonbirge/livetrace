@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.indexOf("END_OF_FILE") !== -1) {
                     clearInterval(pollingInterval); // Now it can access pollingInterval
                     outputDiv.innerHTML = data.replace("END_OF_FILE", "");
-                    outputDiv.innerHTML += "<p><b>Execution complete.</b></p>";
+                    outputDiv.innerHTML += "<p><b>Execution complete</b></p>";
                 } else {
                     outputDiv.innerHTML = data;
                 }
@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start the Bash script and polling
     fetch('start.php?id=' + uniqueId)
         .then(response => {
+			outputDiv.innerHTML = "<p>Starting remote server process...</p>";
             if (response.ok) {
                 pollingInterval = setInterval(pollServer, 1000);
             } else {
