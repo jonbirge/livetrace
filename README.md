@@ -1,2 +1,2 @@
 # livetrace
-Docker container to provide live AJAX web traceroute 
+Docker container to provide live AJAX traceroute web service.
