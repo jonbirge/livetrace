@@ -12,7 +12,7 @@ header("Pragma: no-cache");
     <title>Trace from server</title>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    function runPing() {
     const uniqueId = Math.random().toString(36).substr(2, 9);
     const pingDiv = document.getElementById('ping');
     let pollingInterval; // Define pollingInterval in a broader scope
@@ -42,7 +42,7 @@ header("Pragma: no-cache");
                 pingDiv.innerHTML = '<p>Error starting ping script</p>';
             }
         });
-    });
+    };
     </script>
 
 </head>
@@ -85,7 +85,9 @@ header("Pragma: no-cache");
             </tr>
         </table>
     </div>
-    <div id="ping"></div>
+    <div id="ping">
+    <button class="modern-button" onclick="runPing()">Run ping</button>
+    </div>
 </div>
 </body>
 </html>
