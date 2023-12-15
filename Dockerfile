@@ -20,7 +20,7 @@ COPY entry.sh /entry.sh
 COPY trace.sh /var/www/
 
 # Copy the files to the Nginx web root
-COPY index.php start.php poll.php script.js styles.css /var/www/
+COPY *.php *.js *.css /var/www/
 
 # Expose port 
 EXPOSE 80
