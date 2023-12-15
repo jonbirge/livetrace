@@ -10,8 +10,7 @@ LOCK_FILE="/tmp/test_output_$UNIQUE_ID.lock"
 touch "$LOCK_FILE"
 
 # Write results to temporary file
-ping -c 10 $TARGET_HOST > "$OUT_FILE"
+ping -c 9 -i 0.5 $TARGET_HOST > "$OUT_FILE"
 
 # Delete the lock file to indicate completion
 rm "$LOCK_FILE"
-

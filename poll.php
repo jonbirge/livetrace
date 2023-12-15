@@ -1,36 +1,31 @@
 <?php
+
 $uniqueId = $_GET['id'] ?? '';
 $tempFile = "/tmp/test_output_" . $uniqueId . ".txt";
 $lockFile = "/tmp/test_output_" . $uniqueId . ".lock";
 
-// Check if the CSV file exists
+// Check for the existence of the lock file
+if (!file_exists($lockFile)) {
+    echo "<!-- END_OF_FILE -->";
+}
+
+// Check if the text file exists
 if (file_exists($tempFile)) {
-    // Open the file for reading
-    $handle = fopen($tempFile, "r");
-    
     // Start the HTML table
     echo "<table>";
 
-    // Read each line of a CSV file and format into table
-    // (Just print everything as one line for now...)
-    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-        echo "<tr>";
-        foreach ($data as $cell) {
-            echo "<td>" . htmlspecialchars($cell) . "</td>";
-        }
-        echo "</tr>";
+    echo "<tr><td>";
+    $lines = file($tempFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    if (count($lines) >= 2) {
+        $lastLine = $lines[count($lines) - 1];
+        echo $lastLine;
+    } else {
+        echo "Waiting...";
     }
+    echo "</td></tr>";
 
     // Close the HTML table
     echo "</table>";
-
-    // Close the file handle
-    fclose($handle);
 }
 
-// Check for the existence of the lock file
-if (!file_exists($lockFile)) {
-    echo "END_OF_FILE"; // Or any unique identifier
-}
 ?>
-

@@ -22,8 +22,8 @@ header("Pragma: no-cache");
             .then(response => response.text())
             .then(data => {
                 if (data.indexOf("END_OF_FILE") !== -1) {
-                    clearInterval(pollingInterval); // Now it can access pollingInterval
-                    pingDiv.innerHTML = data.replace("END_OF_FILE", "");
+                    clearInterval(pollingInterval);
+                    pingDiv.innerHTML = data;
                     fetch('cleanup.php?id=' + uniqueId);
                     pingDiv.innerHTML += "<p><b>Ping complete</b></p>";
                 } else {
@@ -35,7 +35,7 @@ header("Pragma: no-cache");
     // Start the Bash script and polling
     fetch('start.php?id=' + uniqueId)
         .then(response => {
-            pingDiv.innerHTML = "<p>Starting ping process...</p>";
+            pingDiv.innerHTML = "<p>Starting ping...</p>";
             if (response.ok) {
                 pollingInterval = setInterval(pollServer, 1000);
             } else {
@@ -62,7 +62,6 @@ header("Pragma: no-cache");
                 <td>Host name</td>
                 <td>
                     <?php
-                    // Check if HTTP_X_FORWARDED_FOR is set, if not use REMOTE_ADDR
                     if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                         $user_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
                     } else {
