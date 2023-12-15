@@ -44,6 +44,39 @@ header("Pragma: no-cache");
             }
         });
     };
+
+    function runTrace() {
+    const uniqueId = Math.random().toString(36).substr(2, 9);
+    const traceDiv = document.getElementById('trace');
+    const runButton = document.getElementById('trace-button');
+    let tracePollInterval;
+
+    function pollTraceServer() {
+        fetch('polltrace.php?id=' + uniqueId)
+            .then(response => response.text())
+            .then(data => {
+                if (data.indexOf("END_OF_FILE") !== -1) {
+                    clearInterval(tracePollInterval);
+                    traceDiv.innerHTML = data;
+                    fetch('cleantrace.php?id=' + uniqueId);
+                    traceDiv.innerHTML += "<p><button class='modern-button' onclick='runTrace()'>Run trace again</button></p>";
+                } else {
+                    traceDiv.innerHTML = data;
+                }
+            });
+    }
+
+    // Start the ping bash script and polling
+    fetch('starttrace.php?id=' + uniqueId)
+        .then(response => {
+            traceDiv.innerHTML = "<p><b>Starting traceroute...</b></p>";
+            if (response.ok) {
+                tracePollInterval = setInterval(pollTraceServer, 1000);
+            } else {
+                traceDiv.innerHTML = '<p>Error starting traceroute</p>';
+            }
+        });
+    };
     </script>
 
 </head>
@@ -86,9 +119,13 @@ header("Pragma: no-cache");
             </tr>
         </table>
     </div>
-    <h2>Ping</h2>
+    <h2>ping</h2>
     <div id="ping">
         <button class="modern-button" onclick="runPing()">Run ping test</button>
+    </div>
+    <h2>traceroute</h2>
+    <div id="trace">
+        <button class="modern-button" onclick="runTrace()">Run traceroute</button>
     </div>
 </div>
 </body>

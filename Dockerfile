@@ -17,7 +17,7 @@ COPY default.conf /etc/nginx/http.d/default.conf
 COPY entry.sh /entry.sh
 
 # Install custom test scripts
-COPY runping.sh /var/www/
+COPY runping.sh runtrace.sh /var/www/
 
 # Copy the files to the Nginx web root
 COPY *.php *.js *.css /var/www/
