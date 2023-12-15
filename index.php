@@ -18,21 +18,34 @@ header("Pragma: no-cache");
     <div>
         <table>
             <tr>
-                <td>Server time:</td>
+                <td>Server time</td>
                 <td>
                     <?php echo shell_exec('date'); ?>
                 </td>
             </tr>
             <tr>
-                <td>Host name:</td>
+                <td>Host name</td>
                 <td>
                     <?php
-                    $user_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                    // Check if HTTP_X_FORWARDED_FOR is set, if not use REMOTE_ADDR
+                    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                        $user_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                    } else {
+                        $user_ip = $_SERVER['REMOTE_ADDR'];
+                    }
                     $host_name = gethostbyaddr($user_ip);
-                    if ($host_name == "") {
+                    if ($host_name == $user_ip) {
                         echo "No host name"; }
                     else {
                         echo $host_name; }
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td>Host IP</td>
+                <td>
+                    <?php
+                    echo $user_ip;
                     ?>
                 </td>
             </tr>

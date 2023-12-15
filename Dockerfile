@@ -13,14 +13,14 @@ RUN chown -R nginx:nginx /var/www
 # Copy the Nginx configuration file
 COPY default.conf /etc/nginx/http.d/default.conf
 
-# Copy the files to the Nginx web root
-COPY index.php start.php poll.php script.js styles.css /var/www/
+# Startup script
+COPY entry.sh /entry.sh
 
 # Install custom test script
 COPY trace.sh /var/www/
 
-# Startup script
-COPY entry.sh /entry.sh
+# Copy the files to the Nginx web root
+COPY index.php start.php poll.php script.js styles.css /var/www/
 
 # Expose port 
 EXPOSE 80

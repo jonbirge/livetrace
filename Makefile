@@ -18,10 +18,14 @@ clean:
 
 # Run locally for testing
 run: build
-	docker run -d -p 8080:80 $(IMAGE_NAME):$(VERSION)
+	docker run  --name livetrace_test -d -p 8080:80 $(IMAGE_NAME):$(VERSION)
+
+# Stop the local test
+stop:
+	docker stop livetrace_test
+	docker rm livetrace_test
 
 # Convenience command to build and push
 all: build push
 
 .PHONY: build push all
-
