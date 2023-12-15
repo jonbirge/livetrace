@@ -37,23 +37,24 @@ tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-/* Modern button */
-.modern-button {
+ /* Styling the button for a modern look */
+ .modern-button {
     background-color: #4CAF50; /* Green background */
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 15px 35px; /* Larger padding for a bigger button */
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    font-family: 'Helvetica', sans-serif;
+    font-weight: normal; /* Bold font weight */
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
-    border-radius: 8px; /* Rounded corners */
-    transition: 0.3s; /* Smooth transition */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition for background color */
 }
 
-/* Change background color on hover */
+/* Change background color on hover to a brighter green */
 .modern-button:hover {
-    background-color: #45a049;
+    background-color: #5CDB60;
 }

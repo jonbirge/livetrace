@@ -8,13 +8,14 @@ header("Pragma: no-cache");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css?version=0.7">
     <title>Trace from server</title>
 
     <script>
     function runPing() {
     const uniqueId = Math.random().toString(36).substr(2, 9);
     const pingDiv = document.getElementById('ping');
+    const runButton = document.getElementById('run-button');
     let pollingInterval; // Define pollingInterval in a broader scope
 
     function pollServer() {
@@ -25,7 +26,7 @@ header("Pragma: no-cache");
                     clearInterval(pollingInterval);
                     pingDiv.innerHTML = data;
                     fetch('cleanup.php?id=' + uniqueId);
-                    pingDiv.innerHTML += "<p><b>Ping complete</b></p>";
+                    pingDiv.innerHTML += "<p><button class='modern-button' onclick='runPing()'>Run ping again</button></p>";
                 } else {
                     pingDiv.innerHTML = data;
                 }
@@ -35,7 +36,7 @@ header("Pragma: no-cache");
     // Start the Bash script and polling
     fetch('start.php?id=' + uniqueId)
         .then(response => {
-            pingDiv.innerHTML = "<p>Starting ping...</p>";
+            pingDiv.innerHTML = "<p><b>Starting ping...</b></p>";
             if (response.ok) {
                 pollingInterval = setInterval(pollServer, 1000);
             } else {
@@ -49,7 +50,7 @@ header("Pragma: no-cache");
 
 <body>
 <div class="container">
-    <h1>Server-side ping</h1>
+    <h1>Network info</h1>
     <div>
         <table>
             <tr>
@@ -86,7 +87,7 @@ header("Pragma: no-cache");
         </table>
     </div>
     <div id="ping">
-    <button class="modern-button" onclick="runPing()">Run ping</button>
+        <button class="modern-button" onclick="runPing()">Run ping test</button>
     </div>
 </div>
 </body>
