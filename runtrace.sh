@@ -10,7 +10,7 @@ LOCK_FILE="/tmp/trace_output_$UNIQUE_ID.lock"
 touch "$LOCK_FILE"
 
 # Write results to temporary file
-ping -c 10 -i 1 $TARGET_HOST > "$OUT_FILE"
+traceroute -I -f 3 $TARGET_HOST >> "$OUT_FILE"
 
 # Delete the lock file to indicate completion
 rm "$LOCK_FILE"
