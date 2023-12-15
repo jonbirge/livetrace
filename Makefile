@@ -16,9 +16,13 @@ push: build
 clean:
 	docker build --no-cache .
 
-# Run locally for testing
-run: build
-	docker run  --name livetrace_test -d -p 8080:80 $(IMAGE_NAME):$(VERSION)
+# Run locally for final testing
+test: build
+	docker run --name livetrace_test -d -p 8080:80 $(IMAGE_NAME):$(VERSION)
+
+# Iterate locally for development
+dev:
+	docker run --name livetrace_test -d -p 8080:80 --volume=.:/var/www/:ro $(IMAGE_NAME):$(VERSION)
 
 # Stop the local test
 stop:
@@ -26,6 +30,6 @@ stop:
 	docker rm livetrace_test
 
 # Convenience command to build and push
-all: build push
+all: build
 
-.PHONY: build push all
+.PHONY: build all
