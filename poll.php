@@ -13,8 +13,9 @@ if (!file_exists($lockFile)) {
 if (file_exists($tempFile)) {
     // Start the HTML table
     echo "<table>";
-
     echo "<tr><td>";
+
+    // Get last line of the text file
     $lines = file($tempFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     if (count($lines) >= 2) {
         $lastLine = $lines[count($lines) - 1];
@@ -22,9 +23,9 @@ if (file_exists($tempFile)) {
     } else {
         echo "Waiting...";
     }
-    echo "</td></tr>";
 
     // Close the HTML table
+    echo "</td></tr>";
     echo "</table>";
 }
 
