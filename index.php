@@ -16,16 +16,16 @@ header("Pragma: no-cache");
     const uniqueId = Math.random().toString(36).substr(2, 9);
     const pingDiv = document.getElementById('ping');
     const runButton = document.getElementById('run-button');
-    let pollingInterval; // Define pollingInterval in a broader scope
+    let pingPollInterval;
 
-    function pollServer() {
-        fetch('poll.php?id=' + uniqueId)
+    function pollPingServer() {
+        fetch('pollping.php?id=' + uniqueId)
             .then(response => response.text())
             .then(data => {
                 if (data.indexOf("END_OF_FILE") !== -1) {
-                    clearInterval(pollingInterval);
+                    clearInterval(pingPollInterval);
                     pingDiv.innerHTML = data;
-                    fetch('cleanup.php?id=' + uniqueId);
+                    fetch('cleanping.php?id=' + uniqueId);
                     pingDiv.innerHTML += "<p><button class='modern-button' onclick='runPing()'>Run ping again</button></p>";
                 } else {
                     pingDiv.innerHTML = data;
@@ -33,12 +33,12 @@ header("Pragma: no-cache");
             });
     }
 
-    // Start the Bash script and polling
-    fetch('start.php?id=' + uniqueId)
+    // Start the ping bash script and polling
+    fetch('startping.php?id=' + uniqueId)
         .then(response => {
             pingDiv.innerHTML = "<p><b>Starting ping...</b></p>";
             if (response.ok) {
-                pollingInterval = setInterval(pollServer, 1000);
+                pingPollInterval = setInterval(pollPingServer, 1000);
             } else {
                 pingDiv.innerHTML = '<p>Error starting ping script</p>';
             }
@@ -86,6 +86,7 @@ header("Pragma: no-cache");
             </tr>
         </table>
     </div>
+    <h2>Ping</h2>
     <div id="ping">
         <button class="modern-button" onclick="runPing()">Run ping test</button>
     </div>

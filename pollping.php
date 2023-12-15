@@ -1,8 +1,8 @@
 <?php
 
 $uniqueId = $_GET['id'] ?? '';
-$tempFile = "/tmp/test_output_" . $uniqueId . ".txt";
-$lockFile = "/tmp/test_output_" . $uniqueId . ".lock";
+$tempFile = "/tmp/ping_output_" . $uniqueId . ".txt";
+$lockFile = "/tmp/ping_output_" . $uniqueId . ".lock";
 
 // Check for the existence of the lock file
 if (!file_exists($lockFile)) {
