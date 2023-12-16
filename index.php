@@ -12,71 +12,77 @@ header("Pragma: no-cache");
     <title>Trace from server</title>
 
     <script>
-    function runPing() {
-    const uniqueId = Math.random().toString(36).substr(2, 9);
-    const pingDiv = document.getElementById('ping');
-    const runButton = document.getElementById('run-button');
-    let pingPollInterval;
+        function runPing() {
+        const uniqueId = Math.random().toString(36).substr(2, 9);
+        const pingDiv = document.getElementById('ping');
+        const runButton = document.getElementById('run-button');
+        let pingPollInterval;
 
-    function pollPingServer() {
-        fetch('pollping.php?id=' + uniqueId)
-            .then(response => response.text())
-            .then(data => {
-                if (data.indexOf("END_OF_FILE") !== -1) {
-                    clearInterval(pingPollInterval);
-                    pingDiv.innerHTML = data;
-                    fetch('cleanping.php?id=' + uniqueId);
-                    pingDiv.innerHTML += "<p><button class='modern-button' onclick='runPing()'>Run ping again</button></p>";
+        function pollPingServer() {
+            fetch('pollping.php?id=' + uniqueId)
+                .then(response => response.text())
+                .then(data => {
+                    if (data.indexOf("END_OF_FILE") !== -1) {
+                        clearInterval(pingPollInterval);
+                        pingDiv.innerHTML = data;
+                        fetch('cleanping.php?id=' + uniqueId);
+                        pingDiv.innerHTML += "<p><button class='modern-button' onclick='runPing()'>Run ping again</button></p>";
+                    } else {
+                        pingDiv.innerHTML = data;
+                    }
+                });
+        }
+
+        // Start the ping bash script and polling
+        fetch('startping.php?id=' + uniqueId)
+            .then(response => {
+                pingDiv.innerHTML = "<p><b>Starting ping...</b></p>";
+                if (response.ok) {
+                    pingPollInterval = setInterval(pollPingServer, 1000);
                 } else {
-                    pingDiv.innerHTML = data;
+                    pingDiv.innerHTML = '<p>Error starting ping script</p>';
                 }
             });
-    }
+        };
 
-    // Start the ping bash script and polling
-    fetch('startping.php?id=' + uniqueId)
-        .then(response => {
-            pingDiv.innerHTML = "<p><b>Starting ping...</b></p>";
-            if (response.ok) {
-                pingPollInterval = setInterval(pollPingServer, 1000);
-            } else {
-                pingDiv.innerHTML = '<p>Error starting ping script</p>';
-            }
-        });
-    };
+        function runTrace() {
+        const uniqueId = Math.random().toString(36).substr(2, 9);
+        const traceDiv = document.getElementById('trace');
+        const runButton = document.getElementById('trace-button');
+        let tracePollInterval;
 
-    function runTrace() {
-    const uniqueId = Math.random().toString(36).substr(2, 9);
-    const traceDiv = document.getElementById('trace');
-    const runButton = document.getElementById('trace-button');
-    let tracePollInterval;
+        function pollTraceServer() {
+            fetch('polltrace.php?id=' + uniqueId)
+                .then(response => response.text())
+                .then(data => {
+                    if (data.indexOf("END_OF_FILE") !== -1) {
+                        clearInterval(tracePollInterval);
+                        traceDiv.innerHTML = data;
+                        //fetch('cleantrace.php?id=' + uniqueId);
+                        traceDiv.innerHTML += "<p><button class='modern-button' onclick='runTrace()'>Run trace again</button></p>";
+                    } else {
+                        traceDiv.innerHTML = data;
+                    }
+                });
+        }
 
-    function pollTraceServer() {
-        fetch('polltrace.php?id=' + uniqueId)
-            .then(response => response.text())
-            .then(data => {
-                if (data.indexOf("END_OF_FILE") !== -1) {
-                    clearInterval(tracePollInterval);
-                    traceDiv.innerHTML = data;
-                    //fetch('cleantrace.php?id=' + uniqueId);
-                    traceDiv.innerHTML += "<p><button class='modern-button' onclick='runTrace()'>Run trace again</button></p>";
+        // Start the ping bash script and polling
+        fetch('starttrace.php?id=' + uniqueId)
+            .then(response => {
+                traceDiv.innerHTML = "<p><b>Starting traceroute...</b></p>";
+                if (response.ok) {
+                    tracePollInterval = setInterval(pollTraceServer, 1000);
                 } else {
-                    traceDiv.innerHTML = data;
+                    traceDiv.innerHTML = '<p>Error starting traceroute</p>';
                 }
             });
-    }
+        };
 
-    // Start the ping bash script and polling
-    fetch('starttrace.php?id=' + uniqueId)
-        .then(response => {
-            traceDiv.innerHTML = "<p><b>Starting traceroute...</b></p>";
-            if (response.ok) {
-                tracePollInterval = setInterval(pollTraceServer, 1000);
-            } else {
-                traceDiv.innerHTML = '<p>Error starting traceroute</p>';
-            }
-        });
-    };
+        function runAll()
+        {
+            runPing();
+            runTrace();
+        }
     </script>
 
 </head>
@@ -118,6 +124,7 @@ header("Pragma: no-cache");
                 </td>
             </tr>
         </table>
+        <button class="modern-button" onclick="runAll()">Run all...</button>
     </div>
     <h2>ping</h2>
     <div id="ping">

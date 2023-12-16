@@ -18,8 +18,9 @@ h1 {
 }
 
 h2 {
-    margin-top: 28px;
+    margin-top: 30px;
     margin-bottom: 16px;
+    font-weight: normal;
 }
 
 /* Style the table */
@@ -47,7 +48,7 @@ tr:nth-child(even) {
     background-color: #4CAF50; /* Green background */
     border: none;
     color: white;
-    padding: 15px 35px; /* Larger padding for a bigger button */
+    padding: 12px 28px; /* Larger padding for a bigger button */
     text-align: center;
     text-decoration: none;
     display: inline-block;
