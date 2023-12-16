@@ -5,6 +5,10 @@ FROM alpine:latest
 RUN apk update && apk upgrade
 RUN apk add --no-cache nginx php-fpm bash
 
+# Install tcptraceroute as setuid root
+RUN apk add --no-cache tcptraceroute
+RUN chmod u+s /usr/bin/tcptraceroute
+
 # Setup Nginx web root
 RUN rm -rf /var/www
 RUN mkdir -p /var/www
@@ -16,8 +20,8 @@ COPY default.conf /etc/nginx/http.d/default.conf
 # Startup script
 COPY entry.sh /entry.sh
 
-# Install custom test script
-COPY trace.sh /var/www/
+# Install custom test scripts
+COPY runping.sh runtrace.sh /var/www/
 
 # Copy the files to the Nginx web root
 COPY *.php *.js *.css /var/www/
