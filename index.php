@@ -58,7 +58,7 @@ header("Pragma: no-cache");
                     if (data.indexOf("END_OF_FILE") !== -1) {
                         clearInterval(tracePollInterval);
                         traceDiv.innerHTML = data;
-                        //fetch('cleantrace.php?id=' + uniqueId);
+                        fetch('cleantrace.php?id=' + uniqueId);
                         traceDiv.innerHTML += "<p><button class='modern-button' onclick='runTrace()'>Run trace again</button></p>";
                     } else {
                         traceDiv.innerHTML = data;
