@@ -99,7 +99,7 @@ header("Pragma: no-cache");
                 </td>
             </tr>
             <tr>
-                <td>Host name</td>
+                <td>Client address</td>
                 <td>
                     <?php
                     if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -116,7 +116,7 @@ header("Pragma: no-cache");
                 </td>
             </tr>
             <tr>
-                <td>Host IP</td>
+                <td>Client IP</td>
                 <td>
                     <?php
                     echo $user_ip;
