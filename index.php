@@ -36,7 +36,7 @@ header("Pragma: no-cache");
         // Start the ping bash script and polling
         fetch('startping.php?id=' + uniqueId)
             .then(response => {
-                pingDiv.innerHTML = "<p><b>Starting ping...</b></p>";
+                pingDiv.innerHTML = "<p>Starting ping...</p>";
                 if (response.ok) {
                     pingPollInterval = setInterval(pollPingServer, 1000);
                 } else {
@@ -69,7 +69,7 @@ header("Pragma: no-cache");
         // Start the ping bash script and polling
         fetch('starttrace.php?id=' + uniqueId)
             .then(response => {
-                traceDiv.innerHTML = "<p><b>Starting traceroute...</b></p>";
+                traceDiv.innerHTML = "<p>Starting traceroute...</p>";
                 if (response.ok) {
                     tracePollInterval = setInterval(pollTraceServer, 1000);
                 } else {
