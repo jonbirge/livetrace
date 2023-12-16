@@ -5,6 +5,10 @@ FROM alpine:latest
 RUN apk update && apk upgrade
 RUN apk add --no-cache nginx php-fpm bash
 
+# Install tcptraceroute as setuid root
+RUN apk add --no-cache tcptraceroute
+RUN chmod u+s /usr/bin/tcptraceroute
+
 # Setup Nginx web root
 RUN rm -rf /var/www
 RUN mkdir -p /var/www
