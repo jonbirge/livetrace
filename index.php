@@ -177,7 +177,7 @@ header("Pragma: no-cache");
     <div id="ping-button">
         <button class="modern-button" onclick="runPing()">Run ping test</button>
     </div>
-    <div id="ping-chart" style="width: 600px; margin: auto;">
+    <div id="ping-chart" style="width: 600px; margin-left: 0; margin-right: auto;">
         <!-- This is where the chart will go -->
     </div>
     <h2>traceroute</h2>
