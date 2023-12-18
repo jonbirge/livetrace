@@ -10,7 +10,7 @@ header("Pragma: no-cache");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="styles.css?version=0.9">
+<link rel="stylesheet" type="text/css" href="styles.css?version=11">
 <title>Trace from server</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Loading Chart.js from CDN -->
@@ -185,7 +185,7 @@ header("Pragma: no-cache");
     <div id="trace-button">
         <button class="modern-button" onclick="runTrace()">Run traceroute</button>
     </div>
-    <div id="trace">
+    <div id="trace" class="trace">
         <!-- This is where the traceroute will go -->
     </div>
 </div>
