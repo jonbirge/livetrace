@@ -96,6 +96,7 @@ header("Pragma: no-cache");
     {
         const uniqueId = Math.random().toString(36).substr(2, 9);
         const traceDiv = document.getElementById('trace');
+        const traceButtonDiv = document.getElementById('trace-button');
         const runButton = document.getElementById('trace-button');
         let tracePollInterval;
 
@@ -107,8 +108,8 @@ header("Pragma: no-cache");
                     if (data.indexOf("END_OF_FILE") !== -1) {
                         clearInterval(tracePollInterval);
                         traceDiv.innerHTML = data;
+                        traceButtonDiv.innerHTML = "<p><button class='modern-button' onclick='runTrace()'>Run trace again</button></p>";
                         fetch('cleantrace.php?id=' + uniqueId);
-                        traceDiv.innerHTML += "<p><button class='modern-button' onclick='runTrace()'>Run trace again</button></p>";
                     } else {
                         traceDiv.innerHTML = data;
                     }
@@ -117,7 +118,7 @@ header("Pragma: no-cache");
 
         fetch('starttrace.php?id=' + uniqueId)
             .then(response => {
-                traceDiv.innerHTML = "<p>Starting traceroute...</p>";
+                traceButtonDiv.innerHTML = "<p>Starting traceroute...</p>";
                 if (response.ok) {
                     tracePollInterval = setInterval(pollTraceServer, 1000);
                 } else {
@@ -181,8 +182,11 @@ header("Pragma: no-cache");
         <!-- This is where the chart will go -->
     </div>
     <h2>traceroute</h2>
-    <div id="trace">
+    <div id="trace-button">
         <button class="modern-button" onclick="runTrace()">Run traceroute</button>
+    </div>
+    <div id="trace">
+        <!-- This is where the traceroute will go -->
     </div>
 </div>
 </body>
