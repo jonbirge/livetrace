@@ -181,7 +181,7 @@ header("Pragma: no-cache");
     <div id="ping-chart" style="width: 600px; margin-left: 0; margin-right: auto;">
         <!-- This is where the chart will go -->
     </div>
-    <h2>route from server</h2>
+    <h2>route to server</h2>
     <div id="trace-button">
         <button class="modern-button" onclick="runTrace()">Run traceroute</button>
     </div>
