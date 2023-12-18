@@ -17,13 +17,19 @@ if (file_exists($tempFile)) {
     // Start the HTML table
     echo "<table>";
 
-    // Read each line of the CSV file
-    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-        echo "<tr>";
-        foreach ($data as $cell) {
-            echo "<td>" . htmlspecialchars($cell) . "</td>";
+    // Read each line of the text file
+    while (!feof($handle)) {
+        $line = trim(fgets($handle));
+
+        // Skip empty lines
+        if ($line != '')
+        {
+            echo "<tr>";
+            $parts = explode(' ', $line, 2);
+            echo "<td>" . htmlspecialchars($parts[0]) . "</td>";
+            echo "<td>" . htmlspecialchars($parts[1]) . "</td>";
+            echo "</tr>";
         }
-        echo "</tr>";
     }
 
     // Close the HTML table

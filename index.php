@@ -10,7 +10,7 @@ header("Pragma: no-cache");
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="styles.css?version=0.8">
+<link rel="stylesheet" type="text/css" href="styles.css?version=0.9">
 <title>Trace from server</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Loading Chart.js from CDN -->
@@ -118,11 +118,11 @@ header("Pragma: no-cache");
 
         fetch('starttrace.php?id=' + uniqueId)
             .then(response => {
-                traceButtonDiv.innerHTML = "<p>Starting traceroute...</p>";
+                traceButtonDiv.innerHTML = "<p>Running traceroute...</p>";
                 if (response.ok) {
                     tracePollInterval = setInterval(pollTraceServer, 1000);
                 } else {
-                    traceDiv.innerHTML = '<p>Error starting traceroute</p>';
+                    traceDiv.innerHTML = '<p>Error starting traceroute!</p>';
                 }
             });
     }
@@ -174,14 +174,14 @@ header("Pragma: no-cache");
         </table>
         <button class="modern-button" onclick="runAll()">Run all...</button>
     </div>
-    <h2>ping</h2>
+    <h2>ping from server</h2>
     <div id="ping-button">
         <button class="modern-button" onclick="runPing()">Run ping test</button>
     </div>
     <div id="ping-chart" style="width: 600px; margin-left: 0; margin-right: auto;">
         <!-- This is where the chart will go -->
     </div>
-    <h2>traceroute</h2>
+    <h2>route from server</h2>
     <div id="trace-button">
         <button class="modern-button" onclick="runTrace()">Run traceroute</button>
     </div>
