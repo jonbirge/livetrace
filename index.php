@@ -6,12 +6,12 @@ header("Pragma: no-cache");
 
 <!DOCTYPE html>
 <html>
-    
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="styles.css?version=11">
-<title>Trace from server</title>
+<link rel="stylesheet" type="text/css" href="styles.css?version=13">
+<title>Livetrace</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Loading Chart.js from CDN -->
 <script>
@@ -24,7 +24,7 @@ header("Pragma: no-cache");
         let pingPollInterval;
 
         // Add canvas to page
-        pingCanvas.innerHTML = '<canvas id="pingChart" width="320" height="180"></canvas>';
+        pingCanvas.innerHTML = '<canvas id="pingChart" style="width: 100%"></canvas>';
         var ctx = document.getElementById('pingChart').getContext('2d');
         var pingChart = new Chart(ctx, {
             type: 'line', // You can change this to 'bar' if you prefer a bar chart
@@ -39,6 +39,8 @@ header("Pragma: no-cache");
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     y: {
                         beginAtZero: true
@@ -137,7 +139,7 @@ header("Pragma: no-cache");
 
 <body>
 <div class="container">
-    <h1>Network info</h1>
+    <h1>Network trace</h1>
     <div>
         <table>
             <tr>
@@ -178,7 +180,7 @@ header("Pragma: no-cache");
     <div id="ping-button">
         <button class="modern-button" onclick="runPing()">Run ping test</button>
     </div>
-    <div id="ping-chart" style="width: 600px; margin-left: 0; margin-right: auto;">
+    <div id="ping-chart" class="responsive-div">
         <!-- This is where the chart will go -->
     </div>
     <h2>route to server</h2>
