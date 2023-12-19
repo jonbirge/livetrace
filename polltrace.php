@@ -25,9 +25,25 @@ if (file_exists($tempFile)) {
         if ($line != '')
         {
             echo "<tr>";
-            $parts = explode(' ', $line, 2);
-            echo "<td>" . htmlspecialchars($parts[0]) . "</td>";
-            echo "<td>" . htmlspecialchars($parts[1]) . "</td>";
+            
+            // Pull out a leading number and the rest of the line
+            $lineParts = explode(' ', $line, 2);
+            $lineNumber = $lineParts[0];
+            $lineText = $lineParts[1];
+
+            // If the line ends with "ms" then pull out the ping time from the end of the line
+            if (substr($lineText, -2) == 'ms') {
+                $lineParts = explode(' ', $lineText);
+                $pingTime = $lineParts[count($lineParts) - 2] . ' ' . $lineParts[count($lineParts) - 1];
+                $lineText = substr($lineText, 0, -strlen($pingTime));
+            } else {
+                $pingTime = '-';
+            }
+
+            echo "<td>" . $lineNumber . "</td>";
+            echo "<td>" . $lineText . "</td>";
+            echo "<td>" . $pingTime . "</td>";
+
             echo "</tr>";
         }
     }
